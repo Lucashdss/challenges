@@ -1,13 +1,14 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 #include <string>
 #include <limits>
 
+using namespace std;
+
 int main()
 {
-    string alphabet {"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'?!.,;:"};
-    string key  {"XZNLWEBGJHQDYVTKFUOMPCIASRxznlwebgjhqdyvtkfuompciasr=-+*^%$"};
+    string alphabet{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'?!.,;:"};
+    string key{"XZNLWEBGJHQDYVTKFUOMPCIASRxznlwebgjhqdyvtkfuompciasr=-+*^%$"};
     bool run = true;
     char choice{};
 
@@ -20,71 +21,73 @@ int main()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch(choice)
+        switch (choice)
         {
-            case 'a':
-            case 'A':
-            {
-                string message{};
-                string encryptedMessage{};
-                cout << "\nEnter the message to encrypt: ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                getline(cin, message);
+        case 'a':
+        case 'A':
+        {
+            string message{};
+            string encryptedMessage{};
+            cout << "\nEnter the message to encrypt: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, message);
 
-                for (auto letter : message)
+            for (auto letter : message)
+            {
+                size_t current_position = alphabet.find(letter);
+                if (current_position != string::npos)
                 {
-                    size_t current_position = alphabet.find(letter);
-                    if (current_position != string::npos)
-                    {
-                        encryptedMessage += key[current_position];
-                    }
-                    else
-                    {
-                        encryptedMessage += letter; // If letter not found, keep it unchanged
-                    }
+                    encryptedMessage += key[current_position];
                 }
-                cout << encryptedMessage << endl;
-                break;
-            }
-
-            case 'b':
-            case 'B':
-            {
-                string encryptedMessage{};
-                string decryptedMessage{};
-                cout << "\nEnter the message to decrypt: ";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                getline(cin, encryptedMessage);
-
-                for (auto letter : encryptedMessage)
+                else
                 {
-                    size_t current_position = key.find(letter);
-                    if (current_position != string::npos)
-                    {
-                        decryptedMessage += alphabet[current_position];
-                    }
-                    else
-                    {
-                        decryptedMessage += letter; // If letter not found, keep it unchanged
-                    }
+                    encryptedMessage += letter; // If letter not found, keep it unchanged
                 }
-                cout << decryptedMessage << "\n" << endl;
-                break;
             }
+            cout << encryptedMessage << endl;
+            break;
+        }
 
-            case 'c':
-            case 'C':
-            {
-                cout << "\nExiting the program." << endl;
-                run = false;
-                break;
-            }
+        case 'b':
+        case 'B':
+        {
+            string encryptedMessage{};
+            string decryptedMessage{};
+            cout << "\nEnter the message to decrypt: ";
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            getline(cin, encryptedMessage);
 
-            default:
+            for (auto letter : encryptedMessage)
             {
-                cout << "Invalid choice, please try again.\n" << endl;
-                break;     
+                size_t current_position = key.find(letter);
+                if (current_position != string::npos)
+                {
+                    decryptedMessage += alphabet[current_position];
+                }
+                else
+                {
+                    decryptedMessage += letter; // If letter not found, keep it unchanged
+                }
             }
+            cout << decryptedMessage << "\n"
+                 << endl;
+            break;
+        }
+
+        case 'c':
+        case 'C':
+        {
+            cout << "\nExiting the program." << endl;
+            run = false;
+            break;
+        }
+
+        default:
+        {
+            cout << "Invalid choice, please try again.\n"
+                 << endl;
+            break;
+        }
         }
     } while (run);
 
